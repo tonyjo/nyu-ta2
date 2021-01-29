@@ -691,7 +691,7 @@ class D3mTa2(Observable):
         self.dbengine, self.DBSession = database.connect(self.db_filename)
 
         self.sessions = {}
-        self.executor = ThreadPoolExecutor(max_workers=16)
+        self.executor = ThreadPoolExecutor(max_workers=int(os.environ['D3MCPU']))
         self._run_queue = Queue()
         self._run_thread = threading.Thread(target=self._pipeline_running_thread)
         self._run_thread.setDaemon(True)
@@ -1164,5 +1164,3 @@ class D3mTa2(Observable):
 def create_outputfolders(folder_path):
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
-
-

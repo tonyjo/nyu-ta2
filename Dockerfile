@@ -47,3 +47,5 @@ COPY eval.sh /usr/local/bin/eval.sh
 CMD "/usr/local/bin/eval.sh" RUN pip3 freeze
 
 EXPOSE 45042
+
+CMD /usr/src/app/d3m_ta2_nyu/main.py ${D3MRUN}

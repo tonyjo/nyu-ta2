@@ -13,6 +13,9 @@ from d3m_ta2_nyu.ta2 import D3mTa2
 logger = logging.getLogger(__name__)
 
 
+TA2_API_HOST = '[::]'
+TA2_API_PORT = os.environ['PORT']
+
 def setup_logging():
     logging.basicConfig(
         level=logging.INFO,
@@ -39,13 +42,10 @@ def main_search():
     ta2.run_search(dataset, problem_path=problem_path, timeout=timeout)
 
 
-def main_serve():
+def main_serve(argv):
     setup_logging()
     port = None
     output_folder = None
-
-    if len(sys.argv) == 2:
-        port = int(sys.argv[1])
 
     if 'D3MOUTPUTDIR' in os.environ:
         output_folder = os.environ['D3MOUTPUTDIR']
@@ -54,4 +54,7 @@ def main_serve():
                 os.environ['D3MOUTPUTDIR'], os.environ.get('D3MTIMEOUT'))
 
     ta2 = D3mTa2(output_folder)
-    ta2.run_server(port)
+    ta2.run_server(TA2_API_PORT)
+
+if __name__ == '__main__':
+    main_serve(sys.argv[1:])
